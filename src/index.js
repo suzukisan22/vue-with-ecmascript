@@ -1,8 +1,8 @@
 import Vue from 'vue';
+import Sample from './components/Sample.vue';
 
 new Vue({
   el: '#app',
-  data: {
-    message: "Hello, World!"
-  }
+  components: { Sample },
+  template: '<sample></sample>'
 })

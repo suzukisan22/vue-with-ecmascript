@@ -1,4 +1,6 @@
-var publidDir = __dirname + '/public';
+const publidDir = __dirname + '/public';
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
   // 元になるファイル
   // こちらをコンパイルしていく
@@ -14,21 +16,25 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options:  {
-          presets: [
-            ['@babel/env',
-              {
-                  "targets": {
-                      "ie": 11
-                  },
-                  "useBuiltIns": "usage"
-              }
-            ]
-          ]
-        }
-      }
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', { modules: false }]]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.vue$/,
+        use: [
+          {
+            loader: "vue-loader"
+          }
+        ]
+      },
     ]
   },
   resolve: {
@@ -41,5 +47,8 @@ module.exports = {
     historyApiFallback: true,
     // document_rootになる。
     contentBase: publidDir
-  }
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 };
